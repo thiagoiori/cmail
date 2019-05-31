@@ -1,0 +1,66 @@
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+    <cmail-header></cmail-header>
+    <ul *ngIf="mensagem" class="mdl-textfield is-invalid">
+      <li *ngFor="let erro of mensagem" class="mdl-textfield__error">
+        {{erro.message}}:{{erro.value}}
+      </li>
+    </ul>
+    <main class="mdl-layout__content">
+      <div class="page-content">
+        <div class="mdl-grid">
+          <form [formGroup]="formCadastro" (ngSubmit)="handleCadastrarUsuario();">
+            <cmail-form-group label="Nome" id-campo="nome" [control]="name">
+                <input autofocus formControlName="name" type="text" name="nome" required cmailFormField>
+                <span *ngIf="name.getError('required')" class="mdl-textfield__error">
+                    Name é obrigatório!
+                  </span>
+                  <span *ngIf="name.getError('minlength')" class="mdl-textfield__error">
+                      Digite no mínimo {{username.getError('minlength').requiredLength}} caracteres...
+                    </span>
+            </cmail-form-group>
+            <cmail-form-group label="User Name" id-campo="username" [control]="username">
+              <input formControlName="username" type="text" name="username" required cmailFormField >
+              <span *ngIf="username.getError('required')" class="mdl-textfield__error">
+                Informar user name é obrigatório!
+              </span>
+              <span *ngIf="username.getError('minlength')" class="mdl-textfield__error">
+                  Digite no mínimo {{username.getError('minlength').requiredLength}} caracteres...
+                </span>
+            </cmail-form-group>
+            <cmail-form-group label="Avatar" id-campo="avatar" [control]="avatar">
+              <input formControlName="avatar" type="text" required name="avatar" cmailFormField >
+              <span *ngIf="avatar.status === 'PENDING'" class="mdl-textfield__error mdl-textfield__checking" >
+                Checking...
+              </span>
+              <span *ngIf="avatar.status === 'VALID'" class="mdl-textfield__error mdl-textfield__valid">
+                OK!
+              </span>
+              <div *ngIf="avatar.getError('urlInvalida')" class="mdl-textfield__error">
+                ERRO!!!! {{avatar.getError('status')}}
+              </div>
+            </cmail-form-group>
+            <cmail-form-group label="Password" id-campo="password" [control]="password">
+              <input formControlName="password" type="password" required name="password" cmailFormField >
+              <span class="mdl-textfield__error">Informar senha é obrigatório!</span>
+            </cmail-form-group>
+            <cmail-form-group label="Phone" id-campo="phone" [control]="phone">
+              <input formControlName="phone" type="tel" name="phone" cmailFormField >
+              <span *ngIf="phone.getError('required')" class="mdl-textfield__error">
+                  Telefone é obrigatório!
+                </span>
+                <span *ngIf="phone.getError('pattern')" class="mdl-textfield__error">
+                    Telefone deve conter 8 ou 9 dígitos
+                  </span>
+            </cmail-form-group>
+            <div class="mdl-card__actions">
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
+                Cadastrar
+              </button>
+            </div>
+  
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+  
